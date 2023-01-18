@@ -6,7 +6,8 @@ export const StyledSlider = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: 30
+  gap: 30,
+  margin: '30px 0',
 });
 
 export const StyledRangeBar = styled('div', {
@@ -72,7 +73,7 @@ export const StyledRangeValueInput = styled('input', {
   fontSize: '1.3rem',
   borderBottom: '3px solid transparent',
   background: 'transparent',
-  color: 'var(--color-text)',
+  color: 'transparent',
   width: '100%',
 
   '&:focus': { borderColor: 'var(--color-primary)' }
