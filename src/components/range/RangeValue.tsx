@@ -1,31 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { RangeBulletType } from '@/models/Range';
+import { useRange } from '@/hooks/useRange';
 import {
   StyledRangeValueInput,
   StyledRangeValueUnit,
   StyledRangeValue,
   StyledRangeValueLabel
-} from './Range.styled';
+} from '@/styled-components/Range.styled';
 
-export type RangeValueProps = {
+export const RangeValue = ({
+  id,
+  value,
+  onBlur
+}: {
+  id: RangeBulletType;
   value: number;
-  unit: string;
-  editable?: boolean;
-  onChange?: (value: number) => void;
-};
-
-export const RangeValue = ({ value, unit, editable, onChange }: RangeValueProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState<number>(value);
+  onBlur: (id: RangeBulletType, value: number) => void;
+}) => {
+  const { unit } = useRange();
+  const [inputValue, setInputValue] = useState<number>(() => value);
 
   useEffect(() => {
     setInputValue(value);
   }, [value]);
 
   const handleBlur = () => {
-    onChange && onChange(inputValue);
+    onBlur(id, inputValue);
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(Number(e.target.value));
   };
 
@@ -35,11 +38,10 @@ export const RangeValue = ({ value, unit, editable, onChange }: RangeValueProps)
         {inputValue}
         <StyledRangeValueInput
           className="range-value__input"
-          ref={inputRef}
           type="number"
           value={inputValue}
-          readOnly={!editable}
-          onChange={handleInput}
+          // readOnly={!editable}
+          onChange={handleChange}
           onBlur={handleBlur}
         />
       </StyledRangeValueLabel>

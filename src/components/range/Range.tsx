@@ -1,19 +1,13 @@
-import { RangeValue } from './RangeValue';
-import { RangeSlider } from './RangeSlider';
-import { StyledRange } from './Range.styled';
+import { IRange } from '@/models/Range';
+import { RangeContext } from '@/contexts/Range.context';
+import { RangeSlider } from '@/components/range/RangeSlider';
 
-type RangeProps = {
-  min: number;
-  max: number;
-  value?: number;
-};
-
-export const Range = ({ min, max, value }: RangeProps) => {
+export const Range = (props: IRange) => {
   return (
-    <StyledRange className="range">
-      <RangeValue value={min} unit="€" editable onChange={(e) => console.log(e)} />
-      <RangeSlider min={min} max={max} value={value} />
-      <RangeValue value={max} unit="€" editable onChange={(e) => console.log(e)} />
-    </StyledRange>
+    <RangeContext.Provider value={{ ...props }}>
+      <div className="range">
+        <RangeSlider />
+      </div>
+    </RangeContext.Provider>
   );
 };

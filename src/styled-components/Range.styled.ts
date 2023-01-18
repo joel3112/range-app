@@ -1,6 +1,8 @@
 import { styled } from '@stitches/react';
 
-export const StyledRange = styled('div', {
+// RangeSlider
+
+export const StyledSlider = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -12,6 +14,14 @@ export const StyledRangeBar = styled('div', {
   background: 'var(--color-text)',
   width: 400,
   height: 6,
+  borderRadius: 5
+});
+
+export const StyledRangeBarProgress = styled('div', {
+  position: 'absolute',
+  background: 'var(--color-primary)',
+  opacity: 0.7,
+  height: '100%',
   borderRadius: 5
 });
 
@@ -27,38 +37,17 @@ export const StyledRangeBullet = styled('div', {
   borderRadius: '50%',
   border: '4px solid var(--color-primary)',
   background: 'var(--color-background)',
+  zIndex: 1,
   top: '50%',
   transform: 'translate(-50%, -50%)',
   transition: 'width 0.2s ease-in-out, height 0.2s ease-in-out',
 
-  '&:hover': { $$bulletSize: '26px' },
-
   variants: {
     isDragging: {
-      true: { cursor: 'move', $$bulletSize: '26px' }
-    }
-  }
-});
-
-export const StyledRangeBulletTooltip = styled('div', {
-  opacity: 0,
-  fontSize: '1.1rem',
-  background: 'var(--color-placeholder)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'absolute',
-  bottom: '100%',
-  padding: '5px 4px',
-  marginBottom: 10,
-  borderRadius: 3,
-  transition: 'opacity 0.2s ease-in-out',
-
-  [`${StyledRangeBullet}:hover &`]: { opacity: 1 },
-
-  variants: {
-    isDragging: {
-      true: { opacity: 1 }
+      true: { cursor: 'grabbing', $$bulletSize: '26px' },
+      false: {
+        '&:hover': { cursor: 'grab', $$bulletSize: '26px' }
+      }
     }
   }
 });

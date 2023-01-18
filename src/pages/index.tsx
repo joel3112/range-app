@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Range } from '../components/range/Range';
+import { Range } from '@/components/range/Range';
 
 export default function Home() {
   return (
@@ -17,12 +17,13 @@ export default function Home() {
         <br />
         <br />
 
-        <Range min={30} max={100} value={40} />
-
+        <Range min={0} max={100} defaultValue={[30, 80]} unit="€" />
         <br />
         <br />
-
-        <Range min={5.99} max={70.99} />
+        <Range min={0} max={100} unit="€" />
+        <br />
+        <br />
+        {/*<Range min={5.99} max={70} unit="€" />*/}
       </main>
     </>
   );
