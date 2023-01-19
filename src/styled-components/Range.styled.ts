@@ -7,7 +7,7 @@ export const StyledSlider = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   gap: 30,
-  margin: '30px 0',
+  margin: '30px 0'
 });
 
 export const StyledRangeBar = styled('div', {
@@ -24,6 +24,15 @@ export const StyledRangeBarProgress = styled('div', {
   opacity: 0.7,
   height: '100%',
   borderRadius: 5
+});
+
+export const StyledBarMark = styled('div', {
+  position: 'absolute',
+  top: 0,
+  width: 3,
+  height: 6,
+  background: 'var(--color-background)',
+  opacity: 0.5
 });
 
 // RangeBullet
@@ -63,6 +72,7 @@ export const StyledRangeValue = styled('div', {
 export const StyledRangeValueLabel = styled('span', {
   fontSize: '1.3rem',
   with: 'fit-content',
+  minWidth: 53,
   position: 'relative'
 });
 
@@ -73,13 +83,13 @@ export const StyledRangeValueInput = styled('input', {
   fontSize: '1.3rem',
   borderBottom: '3px solid transparent',
   background: 'transparent',
-  color: 'transparent',
+  color: 'var(--color-text)',
   width: '100%',
+  textAlign: 'center',
 
   '&:focus': { borderColor: 'var(--color-primary)' }
 });
 
 export const StyledRangeValueUnit = styled('span', {
-  fontSize: '1.3rem',
-  marginLeft: 5
+  fontSize: '1.3rem'
 });

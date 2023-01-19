@@ -1,7 +1,8 @@
 export interface IRange {
-  min: number;
-  max: number;
-  defaultValue?: number[];
+  min?: number;
+  max?: number;
+  rangeValues?: number[]
+  defaultValue?: [number, number];
   unit: string;
 }
 

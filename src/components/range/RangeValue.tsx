@@ -17,8 +17,8 @@ export const RangeValue = ({
   value: number;
   onBlur: (id: RangeBulletType, value: number) => void;
 }) => {
-  const { unit } = useRange();
-  const [inputValue, setInputValue] = useState<number>(() => value);
+  const { unit, rangeValues } = useRange();
+  const [inputValue, setInputValue] = useState<number>(value);
 
   useEffect(() => {
     setInputValue(value);
@@ -35,15 +35,17 @@ export const RangeValue = ({
   return (
     <StyledRangeValue className="range-value">
       <StyledRangeValueLabel className="range-value__label">
-        {inputValue}
-        <StyledRangeValueInput
-          className="range-value__input"
-          type="number"
-          value={inputValue}
-          // readOnly={!editable}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+        {!rangeValues ? (
+          <StyledRangeValueInput
+            className="range-value__input"
+            type="number"
+            value={inputValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        ) : (
+          <span>{inputValue}</span>
+        )}
       </StyledRangeValueLabel>
       <StyledRangeValueUnit className="range-value__unit">{unit}</StyledRangeValueUnit>
     </StyledRangeValue>

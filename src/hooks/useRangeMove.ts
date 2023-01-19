@@ -1,10 +1,18 @@
 import { RefObject, useEffect, useState } from 'react';
 import { IRangeBullets, RangeBulletType } from '@/models/Range';
 import { useRange } from '@/hooks/useRange';
-import { calculatePercentage, initializeBullet, inRange, limitValue, sortedBullets } from '@/utils';
+import {
+  getClosestValue,
+  calculatePercentage,
+  initializeBullet,
+  inRange,
+  limitValue,
+  sortedBullets,
+  markedValuesPosition
+} from '@/utils';
 
 export const useRangeMove = (barRef: RefObject<HTMLDivElement>) => {
-  const { min, max, defaultValues } = useRange();
+  const { min, max, defaultValues, rangeValues } = useRange();
   const [bullets, setBullets] = useState<IRangeBullets>(() =>
     initializeBullet(defaultValues, min, max)
   );
@@ -21,16 +29,26 @@ export const useRangeMove = (barRef: RefObject<HTMLDivElement>) => {
       const valuePercentage = (positionX - left) / width;
       const newValue = Math.round(valuePercentage * (max - min)) + min;
 
-      setBullets((prev) => ({
-        ...prev,
-        [id]: { ...prev[id], value: limitValue(newValue, min, max) }
-      }));
+      if (rangeValues) {
+        const closestValue = getClosestValue(rangeValues, newValue, id);
+        const closestPosition = calculatePercentage(closestValue, min, max);
 
-      if (inRange(newValue, [min, max])) {
         setBullets((prev) => ({
           ...prev,
-          [id]: { ...prev[id], position: valuePercentage }
+          [id]: { value: closestValue, position: closestPosition }
         }));
+      } else {
+        setBullets((prev) => ({
+          ...prev,
+          [id]: { ...prev[id], value: limitValue(newValue, min, max) }
+        }));
+
+        if (inRange(newValue, [min, max])) {
+          setBullets((prev) => ({
+            ...prev,
+            [id]: { ...prev[id], position: valuePercentage }
+          }));
+        }
       }
     }
   };
@@ -46,6 +64,7 @@ export const useRangeMove = (barRef: RefObject<HTMLDivElement>) => {
 
   return {
     values: sortedBullets(bullets),
+    markedValuesPosition: markedValuesPosition(rangeValues || [], min, max),
     handleMove,
     handleChangeValue
   };

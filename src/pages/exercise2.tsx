@@ -2,11 +2,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useFetch } from '@/hooks/useFetch';
 import { Range } from '@/components/range/Range';
-import { NORMAL_RANGE_URL } from '@/services';
+import { FIXED_RANGE_URL } from '@/services';
 
 export default function Exercise1() {
-  const { data: normalRangeData, loading } = useFetch<{ min: number; max: number }>(
-    NORMAL_RANGE_URL
+  const { data: fixedRangeData, loading } = useFetch<{ rangeValues: number[] }>(
+    FIXED_RANGE_URL
   );
 
   return (
@@ -24,7 +24,7 @@ export default function Exercise1() {
           <>
             <h1>Fixed values range</h1>
 
-            {normalRangeData && <Range {...normalRangeData} defaultValue={[30, 80]} unit="€" />}
+            {fixedRangeData && <Range {...fixedRangeData} unit="€" />}
 
             <Link href="/">
               <h2>Home</h2>
