@@ -1,6 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Range app
 
-## Getting Started
+This is a range application that explains how to use the range component.  
+The range has two ways to be used, normal and with fixed values.  
+The default `min`, `max` and `rangeValues` values are mocked in the example.
+
+## Usage
+
+#### Normal Range
+
+```tsx
+<Range min={0} max={100} defaultValue={[30, 80]} unit="€" />
+```
+![img_1.png](public/img_1.png)
+
+#### Fixed values range
+
+```tsx
+<Range rangeValues={[1.99, 5.99, 10.99, 30.99, 50.99, 70.99]} unit="€" />
+```
+![img_2.png](public/img_2.png)
+
+## Props
+
+| Name         | Type               | Default value | Description                                                                     |
+| ------------ | ------------------ | ------------- |---------------------------------------------------------------------------------|
+| min          | `number`           | `0`           | Defines the minimum value of the component.                                     |
+| max          | `number`           | `100`         | Defines the maximum value of the component.                                     |
+| unit         | `string`           |               | Defines the units of the component.                                             |
+| rangeValues  | `number[]`         | `[]`          | Defines the range values of the component. This values only will be selectable. |
+| defaultValue | `[number, number]` | `[0, 100]`    | Defines the default value of the component. Only applies if rangeValues is empty.|
+
+## Development
 
 First, run the development server:
 
@@ -13,26 +43,3 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

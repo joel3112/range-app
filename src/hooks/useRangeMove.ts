@@ -1,13 +1,12 @@
 import { RefObject, useEffect, useState } from 'react';
 import { IRangeBullets, RangeBulletType } from '@/models/Range';
 import { useRange } from '@/hooks/useRange';
+import { initializeBullet, sortedBullets } from '@/utils/bullets';
 import {
   getClosestValue,
   calculatePercentage,
-  initializeBullet,
   inRange,
   limitValue,
-  sortedBullets,
   markedValuesPosition
 } from '@/utils';
 
@@ -30,7 +29,11 @@ export const useRangeMove = (barRef: RefObject<HTMLDivElement>) => {
       const newValue = Math.round(valuePercentage * (max - min)) + min;
 
       if (rangeValues) {
-        const closestValue = getClosestValue(rangeValues, newValue, id);
+        const closestValue = getClosestValue(
+          rangeValues,
+          newValue,
+          id === RangeBulletType.LEFT ? 1 : -1
+        );
         const closestPosition = calculatePercentage(closestValue, min, max);
 
         setBullets((prev) => ({

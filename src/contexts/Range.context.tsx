@@ -8,5 +8,6 @@ export const RangeContext = createContext<IRange>({
   min: MIN_DEFAULT,
   max: MAX_DEFAULT,
   defaultValue: [MIN_DEFAULT, MAX_DEFAULT],
+  rangeValues: [],
   unit: '€'
 });

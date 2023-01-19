@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useFetch } from '@/hooks/useFetch';
+import { useFetchData } from '@/hooks/useFetchData';
 import { Range } from '@/components/range/Range';
 import { FIXED_RANGE_URL } from '@/services';
 
 export default function Exercise1() {
-  const { data: fixedRangeData, loading } = useFetch<{ rangeValues: number[] }>(
+  const { data: fixedRangeData, loading } = useFetchData<{ rangeValues: number[] }>(
     FIXED_RANGE_URL
   );
 

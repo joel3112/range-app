@@ -27,6 +27,7 @@ export const useRangeBullet = (id: RangeBulletType, onMove: IRangeBullet['onMove
 
   return {
     isDragging,
-    handleStart
+    handleStart,
+    handleEnd
   };
 };

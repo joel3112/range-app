@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
+import { fetchData } from '@/services';
 
-export const useFetch = <T>(url: string) => {
+export const useFetchData = <T>(url: string) => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchingData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setData(json);
+        const response = await fetchData(url);
+        setData(response);
       } catch (error) {
         console.error(error);
       } finally {
@@ -18,7 +18,7 @@ export const useFetch = <T>(url: string) => {
       }
     };
 
-    fetchData();
+    fetchingData();
   }, [url]);
 
   return { data, loading };
