@@ -4,6 +4,8 @@ This is a range application that explains how to use the range component.
 The range has two ways to be used, normal and with fixed values.  
 The default `min`, `max` and `rangeValues` values are mocked in the example.
 
+### [Demo](https://react-range-app.vercel.app/)
+
 ## Usage
 
 #### Normal Range
@@ -11,6 +13,7 @@ The default `min`, `max` and `rangeValues` values are mocked in the example.
 ```tsx
 <Range min={0} max={100} defaultValue={[30, 80]} unit="€" />
 ```
+
 ![img_1.png](public/img_1.png)
 
 #### Fixed values range
@@ -18,17 +21,18 @@ The default `min`, `max` and `rangeValues` values are mocked in the example.
 ```tsx
 <Range rangeValues={[1.99, 5.99, 10.99, 30.99, 50.99, 70.99]} unit="€" />
 ```
+
 ![img_2.png](public/img_2.png)
 
 ## Props
 
-| Name         | Type               | Default value | Description                                                                     |
-| ------------ | ------------------ | ------------- |---------------------------------------------------------------------------------|
-| min          | `number`           | `0`           | Defines the minimum value of the component.                                     |
-| max          | `number`           | `100`         | Defines the maximum value of the component.                                     |
-| unit         | `string`           |               | Defines the units of the component.                                             |
-| rangeValues  | `number[]`         | `[]`          | Defines the range values of the component. This values only will be selectable. |
-| defaultValue | `[number, number]` | `[0, 100]`    | Defines the default value of the component. Only applies if rangeValues is empty.|
+| Name         | Type               | Default value | Description                                                                       |
+| ------------ | ------------------ | ------------- | --------------------------------------------------------------------------------- |
+| min          | `number`           | `0`           | Defines the minimum value of the component.                                       |
+| max          | `number`           | `100`         | Defines the maximum value of the component.                                       |
+| unit         | `string`           |               | Defines the units of the component.                                               |
+| defaultValue | `[number, number]` | `[0, 100]`    | Defines the default value of the component. Only applies if rangeValues is empty. |
+| rangeValues  | `number[]`         |               | Defines the range values of the component. This values only will be selectable.   |
 
 ## Development
 
