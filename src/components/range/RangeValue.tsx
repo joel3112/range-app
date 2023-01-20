@@ -31,6 +31,7 @@ export const RangeValue = ({ id }: { id: RangeBulletType }) => {
           <StyledRangeValueInput
             className="range-value__input"
             type="number"
+            aria-label={String(inputValue)}
             value={inputValue}
             onBlur={handleBlur}
             onChange={handleChange}

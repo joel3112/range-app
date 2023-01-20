@@ -13,6 +13,7 @@ export const RangeBullet = ({ style, id, onMove }: RangeBulletProps) => {
   return (
     <StyledRangeBullet
       className="range-bar__bullet"
+      aria-label={`bullet-${id}`}
       isDragging={isDragging}
       css={{
         ...style
