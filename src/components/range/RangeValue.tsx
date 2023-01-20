@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { RangeBulletType } from '@/models/Range';
-import { useRange } from '@/hooks/useRange';
+import { useRange } from '@/contexts/Range.context';
 import {
   StyledRangeValueInput,
   StyledRangeValueUnit,
@@ -8,24 +8,16 @@ import {
   StyledRangeValueLabel
 } from '@/styled-components/Range.styled';
 
-export const RangeValue = ({
-  id,
-  value,
-  onBlur
-}: {
-  id: RangeBulletType;
-  value: number;
-  onBlur: (id: RangeBulletType, value: number) => void;
-}) => {
-  const { unit, rangeValues } = useRange();
-  const [inputValue, setInputValue] = useState<number>(value);
+export const RangeValue = ({ id }: { id: RangeBulletType }) => {
+  const { unit, value, setValue, rangeValues } = useRange();
+  const [inputValue, setInputValue] = useState<number>(value[id]);
 
   useEffect(() => {
-    setInputValue(value);
-  }, [value]);
+    setInputValue(value[id]);
+  }, [value, id]);
 
   const handleBlur = () => {
-    onBlur(id, inputValue);
+    setValue(id, inputValue);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,14 +32,14 @@ export const RangeValue = ({
             className="range-value__input"
             type="number"
             value={inputValue}
-            onChange={handleChange}
             onBlur={handleBlur}
+            onChange={handleChange}
           />
         ) : (
-          <span>{inputValue}</span>
+          <span aria-label={`value-${id}`}>{inputValue}</span>
         )}
       </StyledRangeValueLabel>
-      <StyledRangeValueUnit className="range-value__unit">{unit}</StyledRangeValueUnit>
+      {unit && <StyledRangeValueUnit className="range-value__unit">{unit}</StyledRangeValueUnit>}
     </StyledRangeValue>
   );
 };

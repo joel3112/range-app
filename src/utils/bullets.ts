@@ -1,40 +1,29 @@
-import { IRangeBullets, IRangeValues, RangeBulletType } from '@/models/Range';
-import { calculatePercentage, limitValue } from '@/utils/index';
+import { RangeBulletType } from '@/models/Range';
+import { calculatePercentage, limitValue } from '@/utils';
 
-export const sortedBullets = (bullets: IRangeBullets) => {
-  const sortedArray = Object.entries(bullets)
-    .sort((a, b) => a[1].value - b[1].value)
-    .map(([key, value]) => ({
-      id: key as RangeBulletType,
-      value: value.value,
-      position: value.position
-    }));
-
-  return {
-    [RangeBulletType.LEFT]: sortedArray[0],
-    [RangeBulletType.RIGHT]: sortedArray[1]
-  };
+export const checkCurrentBullet = (
+  id: RangeBulletType,
+  values: [number, number],
+  value: number
+) => {
+  if (id === RangeBulletType.LEFT && value > values[RangeBulletType.RIGHT]) {
+    return RangeBulletType.RIGHT;
+  }
+  if (id === RangeBulletType.RIGHT && value < values[RangeBulletType.LEFT]) {
+    return RangeBulletType.LEFT;
+  }
+  return id;
 };
 
-export const initializeBullet = (defaultValues: IRangeValues, min: number, max: number) => {
-  if (defaultValues.left && defaultValues.right) {
-    const limitedLeft = limitValue(defaultValues.left, min, max);
-    const limitedRight = limitValue(defaultValues.right, min, max);
+export const initializePositions = (defaultValues: [number, number], min: number, max: number) => {
+  if (defaultValues) {
+    const [left, right] = defaultValues;
 
-    return {
-      left: {
-        value: limitedLeft,
-        position: calculatePercentage(limitedLeft, min, max)
-      },
-      right: {
-        value: limitedRight,
-        position: calculatePercentage(limitedRight, min, max)
-      }
-    };
+    return [
+      calculatePercentage(limitValue(left, min, max), min, max),
+      calculatePercentage(limitValue(right, min, max), min, max)
+    ] as [number, number];
   }
 
-  return {
-    left: { value: min, position: 0 },
-    right: { value: max, position: 1 }
-  };
+  return [0, 1] as [number, number];
 };

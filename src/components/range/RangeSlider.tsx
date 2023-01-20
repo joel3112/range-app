@@ -1,8 +1,10 @@
 import { useRef } from 'react';
 import { RangeBulletType } from '@/models/Range';
+import { useRange } from '@/contexts/Range.context';
 import { useRangeMove } from '@/hooks/useRangeMove';
 import { RangeBullet } from '@/components/range/RangeBullet';
 import { RangeValue } from '@/components/range/RangeValue';
+import { markedValuesPosition } from '@/utils';
 import {
   StyledBarMark,
   StyledRangeBar,
@@ -12,31 +14,32 @@ import {
 
 export const RangeSlider = () => {
   const barRef = useRef<HTMLDivElement>(null);
-  const { values, markedValuesPosition, handleMove, handleChangeValue } = useRangeMove(barRef);
-  const { [RangeBulletType.LEFT]: bulletLeft, [RangeBulletType.RIGHT]: bulletRight } = values;
+  const { min, max, value, rangeValues = [] } = useRange();
+  const { positions, handleMove } = useRangeMove(barRef);
+  const [leftPosition, rightPosition] = positions;
 
   return (
     <StyledSlider className="range-slider">
-      <RangeValue id={RangeBulletType.LEFT} value={bulletLeft.value} onBlur={handleChangeValue} />
+      <RangeValue id={RangeBulletType.LEFT} />
 
       <StyledRangeBar className="range-bar" ref={barRef}>
-        {Object.entries(values).map(([id, { position }]) => (
+        {value.map((value, index) => (
           <RangeBullet
-            key={id}
-            id={id as RangeBulletType}
-            style={{ left: `${position * 100}%` }}
+            key={index}
+            id={index}
+            style={{ left: `${positions[index] * 100}%` }}
             onMove={handleMove}
           />
         ))}
         <StyledRangeBarProgress
           style={{
-            width: `${(bulletRight.position - bulletLeft.position) * 100}%`,
-            left: `${bulletLeft.position * 100}%`
+            width: `${(rightPosition - leftPosition) * 100}%`,
+            left: `${leftPosition * 100}%`
           }}
           className="range-bar__progress"
         />
 
-        {markedValuesPosition.map((position, index) => (
+        {markedValuesPosition(rangeValues, min, max).map((position, index) => (
           <StyledBarMark
             key={index}
             style={{
@@ -47,7 +50,7 @@ export const RangeSlider = () => {
         ))}
       </StyledRangeBar>
 
-      <RangeValue id={RangeBulletType.RIGHT} value={bulletRight.value} onBlur={handleChangeValue} />
+      <RangeValue id={RangeBulletType.RIGHT} />
     </StyledSlider>
   );
 };

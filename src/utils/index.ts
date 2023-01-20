@@ -1,3 +1,9 @@
+export const arrayUpdate = (array: number[], index: number, value: number) => {
+  const newArray = [...array];
+  newArray[index] = value;
+  return newArray;
+};
+
 export const limitValue = (value: number, min: number, max: number) => {
   if (!value) {
     return min;

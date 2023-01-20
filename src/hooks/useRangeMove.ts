@@ -1,74 +1,45 @@
 import { RefObject, useEffect, useState } from 'react';
-import { IRangeBullets, RangeBulletType } from '@/models/Range';
-import { useRange } from '@/hooks/useRange';
-import { initializeBullet, sortedBullets } from '@/utils/bullets';
-import {
-  getClosestValue,
-  calculatePercentage,
-  inRange,
-  limitValue,
-  markedValuesPosition
-} from '@/utils';
+import { RangeBulletType } from '@/models/Range';
+import { useRange } from '@/contexts/Range.context';
+import { checkCurrentBullet, initializePositions } from '@/utils/bullets';
+import { getClosestValue, limitValue } from '@/utils';
 
 export const useRangeMove = (barRef: RefObject<HTMLDivElement>) => {
-  const { min, max, defaultValues, rangeValues } = useRange();
-  const [bullets, setBullets] = useState<IRangeBullets>(() =>
-    initializeBullet(defaultValues, min, max)
+  const { min, max, rangeValues, value, setValue } = useRange();
+  const [positions, setPositions] = useState<[number, number]>(() =>
+    initializePositions(value, min, max)
   );
 
   useEffect(() => {
-    if (defaultValues.left && defaultValues.right) {
-      setBullets(initializeBullet(defaultValues, min, max));
+    if (value) {
+      setPositions(initializePositions(value, min, max));
     }
-  }, [defaultValues, min, max]);
+  }, [value, min, max]);
 
   const handleMove = (id: RangeBulletType, positionX: number) => {
     if (barRef && barRef.current) {
       const { left, width } = barRef.current.getBoundingClientRect() as DOMRect;
-      const valuePercentage = (positionX - left) / width;
-      const newValue = Math.round(valuePercentage * (max - min)) + min;
+      const positionPercentage = (positionX - left) / width;
+      const valuePercentage = Math.round(positionPercentage * (max - min)) + min;
 
+      let newValue;
       if (rangeValues) {
         const closestValue = getClosestValue(
           rangeValues,
-          newValue,
+          valuePercentage,
           id === RangeBulletType.LEFT ? 1 : -1
         );
-        const closestPosition = calculatePercentage(closestValue, min, max);
-
-        setBullets((prev) => ({
-          ...prev,
-          [id]: { value: closestValue, position: closestPosition }
-        }));
+        newValue = closestValue || valuePercentage;
       } else {
-        setBullets((prev) => ({
-          ...prev,
-          [id]: { ...prev[id], value: limitValue(newValue, min, max) }
-        }));
-
-        if (inRange(newValue, [min, max])) {
-          setBullets((prev) => ({
-            ...prev,
-            [id]: { ...prev[id], position: valuePercentage }
-          }));
-        }
+        newValue = limitValue(valuePercentage, min, max);
       }
+      const index = value ? checkCurrentBullet(id, value, newValue) : id;
+      setValue && setValue(index, newValue);
     }
   };
 
-  const handleChangeValue = (id: RangeBulletType, value: number) => {
-    const limitedValue = limitValue(value, min, max);
-
-    setBullets((prev) => ({
-      ...prev,
-      [id]: { value: limitedValue, position: calculatePercentage(limitedValue, min, max) }
-    }));
-  };
-
   return {
-    values: sortedBullets(bullets),
-    markedValuesPosition: markedValuesPosition(rangeValues || [], min, max),
-    handleMove,
-    handleChangeValue
+    positions,
+    handleMove
   };
 };

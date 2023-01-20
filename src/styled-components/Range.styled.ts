@@ -31,8 +31,7 @@ export const StyledBarMark = styled('div', {
   top: 0,
   width: 3,
   height: 6,
-  background: 'var(--color-background)',
-  opacity: 0.5
+  background: 'var(--color-background)'
 });
 
 // RangeBullet
