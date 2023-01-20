@@ -12,7 +12,7 @@ export const StyledSlider = styled('div', {
 
 export const StyledRangeBar = styled('div', {
   position: 'relative',
-  background: 'var(--color-text)',
+  background: 'var(--color-placeholder)',
   width: 400,
   height: 6,
   borderRadius: 5

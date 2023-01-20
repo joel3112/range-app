@@ -5,13 +5,14 @@
   --color-primary: #1280e0;
   --color-text: #000;
   --color-background: #fff;
-  --color-placeholder: #8c8a8a;
+  --color-placeholder: #b4b2b2;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --color-text: #fff;
     --color-background: #212020;
+    --color-placeholder: #8c8a8a;
   }
 }
 
