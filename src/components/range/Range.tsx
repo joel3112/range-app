@@ -2,7 +2,7 @@ import { IRange } from '@/models/Range';
 import { RangeProvider } from '@/contexts/Range.context';
 import { RangeSlider } from '@/components/range/RangeSlider';
 
-// TODO: Add styles 222
+// TODO: Add styles 22233
 export const Range = (props: IRange) => {
   return (
     <RangeProvider {...props}>
