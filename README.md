@@ -11,7 +11,7 @@ The default `min`, `max` and `rangeValues` values are mocked in the example.
 #### Normal Range
 
 ```tsx
-<Range min={0} max={100} defaultValue={[30, 80]} unit="€" />
+<Range min={0} max={100} defaultValue={[30, 50]} unit="€" />
 ```
 
 ![img_1.png](public/img_1.png)
