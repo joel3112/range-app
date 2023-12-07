@@ -12,13 +12,3 @@ export const Range = (props: IRange) => {
     </RangeProvider>
   );
 };
-
-export const Range2 = (props: IRange) => {
-  return (
-    <RangeProvider {...props}>
-      <div className="range">
-        <RangeSlider />
-      </div>
-    </RangeProvider>
-  );
-};
